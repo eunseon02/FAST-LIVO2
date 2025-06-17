@@ -383,7 +383,7 @@ void VIOManager::retrieveFromVisualSparseMap(cv::Mat img, vector<pointWithVar> &
 
   // printf("pg size: %zu \n", pg.size());
 
-  for (int i = 0; i < pg.size(); i++)
+  for (int i = 0; i < pg.size(); i++) // For each point in 3D point cloud updated in LiDAR step
   {
     // double t0 = omp_get_wtime();
 
@@ -590,6 +590,7 @@ void VIOManager::retrieveFromVisualSparseMap(cv::Mat img, vector<pointWithVar> &
     }
   }
 
+  // Delete voxel key out of FOV
   for (auto &key : DeleteKeyList)
   {
     sub_feat_map.erase(key);
@@ -602,6 +603,7 @@ void VIOManager::retrieveFromVisualSparseMap(cv::Mat img, vector<pointWithVar> &
   // double t_2, t_3, t_4, t_5;
   // t_2=t_3=t_4=t_5=0;
 
+  // Affine wrap & Photometric error calculation
   for (int i = 0; i < length; i++)
   {
     if (grid_num[i] == TYPE_MAP)
@@ -1797,6 +1799,9 @@ void VIOManager::processFrame(cv::Mat &img, vector<pointWithVar> &pg, const unor
   if (img.channels() == 3) cv::cvtColor(img, img, CV_BGR2GRAY);
 
   new_frame_.reset(new Frame(cam, img));
+
+
+  ///////// Dense Patch Matching /////////
   updateFrameState(*state);
   
   resetGrid();

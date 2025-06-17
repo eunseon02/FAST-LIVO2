@@ -1,27 +1,20 @@
 common:
-  img_topic: "/alphasense/cam0/image_raw"
-  lid_topic: "/hesai/pandar"
-  imu_topic: "/alphasense/imu"
+  img_topic: "/alphasense_driver_ros/cam0"
+  lid_topic: "/os_cloud_node/points"
+  imu_topic: "/alphasense_driver_ros/imu"
   img_en: 1
   lidar_en: 1
   ros_driver_bug_fix: false
 
 extrin_calib: # Lidar-to-IMU
-  # Hilti-2022
-  extrinsic_T: [-0.001, -0.00855, 0.055] 
-  extrinsic_R: [0, -1, 0, -1, 0, 0, 0, 0, -1]
-  
-  # Hilti-2023
-  # extrinsic_T: [-0.006730146149038548, -0.006897049862999071, 0.049898628062256645] 
-  # extrinsic_R: [0.006609639848469365, -0.9999773650294649, 0.0012578115132016717, 
-  #               -0.9999762249571927, -0.006612093869054189, -0.0019569708811106104, 
-  #               0.001965243352927244, -0.0012448467359610184, -0.9999972940839232]
+  extrinsic_T: [-0.037, -0.008, -0.026] 
+  extrinsic_R: [1, 0, 0, 0, -1, 0, 0, 0, -1]
 
-  # Hilti : CAM to LiDAR
-  Rcl: [ -0.999926,  -0.00670802, 0.0101073,
-         -0.0100912, -0.00242564, -0.999946,
-          0.00673218,-0.999975, 0.00235777 ]
-  Pcl: [ -0.0549762, 0.0675401, -0.0520599 ]
+  # CAM to LiDAR
+  Rcl: [ 0.00343924,  -0.00100547,   1.00001724,
+          0.99999964,   0.00601285,   0.00344522, 
+           -0.00601642,   0.99998142,   0.00098474,]
+  Pcl: [   0.08622284 , 0.05557528, 0.01659839 ]
 
 time_offset:
   imu_time_offset: 0.0
@@ -32,9 +25,9 @@ preprocess:
   hilti_en: true
   point_filter_num: 1
   filter_size_surf: 0.1 # 0.2
-  lidar_type: 5 # HesaiXT32
-  scan_line: 32
-  blind: 0.6 # 0.1 0.3
+  lidar_type: 3 # Ouster
+  scan_line: 16
+  blind: 1.0 # 0.1 0.3
  
 vio:
   max_iterations: 5
